@@ -1,0 +1,11 @@
+module.exports = (sequelize, DataTypes) => {
+  const Store = sequelize.define('Store', {
+    name: { type: DataTypes.STRING, allowNull:false },
+    email: { type: DataTypes.STRING, allowNull:true, validate:{ isEmail:true } },
+    address: { type: DataTypes.STRING(400), allowNull:true }
+  }, {
+    tableName: 'stores'
+  });
+
+  return Store;
+};
