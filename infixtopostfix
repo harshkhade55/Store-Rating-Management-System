@@ -89,4 +89,4 @@ char pop(char st[50])
 	char ele;
 	ele=st[top--];
 	return ele;
-}
+} 
