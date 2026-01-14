@@ -1,0 +1,151 @@
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+#include<iostream.h>
+#include<string.h>
+
+struct node{
+	int info;
+	struct node *next;
+};
+struct node *create(struct node *);
+struct node *insert(struct node *,int,int);
+struct node *delet(struct node *,int);
+void display(struct node *);
+
+main()
+{
+	struct node *lst=NULL;
+	int ele,pos;
+	char ch;
+	clrscr();
+	do
+	{
+		cout<<"\n\tOptions\t\t\tChoice";
+		cout<<"\n\tCreate\t\t\tC/c";
+		cout<<"\n\tInsert\t\t\tI/i";
+		cout<<"\n\tDelete\t\t\tD/d";
+		cout<<"\n\tExit\t\t\tX/x";
+		cout<<"\nEnter your choice :";
+		do
+		       ch=getchar();
+		while(strchr("IiCcDdXx",ch)==NULL);
+		switch(ch)
+		{
+			case'C':
+			case'c':
+				lst=create(lst);
+				cout<<"\n***** LIST *****";
+				display(lst);
+				break;
+			case'I':
+			case'i':
+				cout<<"\nEnter Information :";
+				cin>>ele;
+				cout<<"\nSelect position of insertion :" ;
+				cin>>pos;
+				lst=insert(lst,ele,pos);
+				cout<<"\n****** LIST *****";
+				display(lst);
+				break;
+			case'D':
+			case'd':
+				if(lst==NULL)
+					cout<<"\nThe list is empty" ;
+				else
+				{
+					cout<<"\nEnter information to delete:";
+					cin>>ele;
+					lst=delet(lst,ele);
+					if(lst==NULL)
+						cout<<"\nThe list has become empty." ;
+					else
+					{
+						cout<<"\n***** LIST *****";
+						display(lst);
+					}
+				}
+		}
+	}while(ch!='X' && ch!='x');
+
+}
+struct node *create(struct node *lst)
+{
+	struct node *newnode,*last;
+	int ele;
+	cout<<"\nEnter information to insert :";
+	cin>>ele;
+	while(ele!=0)
+	{
+		newnode=(struct node *)malloc(sizeof(struct node));
+		newnode->info=ele;
+		newnode->next=NULL;
+		if(lst==NULL)
+			lst=newnode;
+		else
+			last->next=newnode;
+		last=newnode;
+		cout<<"\nEnter information to insert : ";
+		cin>>ele;
+	}
+	return lst;
+}
+
+struct node *insert(struct node *lst,int ele,int pos)
+{
+	struct node *newnode,*temp;
+	int p;
+	newnode=(struct node *)malloc(sizeof(struct node));
+	newnode->info=ele;
+	newnode->next=NULL;
+	if(pos==1)
+	{
+		newnode->next=lst;
+		lst=newnode;
+	}
+	else
+	{
+		temp=lst;
+		p=2;
+		while((p!=pos)&&(temp->next!=NULL))
+		{
+			temp=temp->next;
+			p++;
+		}
+		newnode->next=temp->next;
+		temp->next=newnode;
+	}
+	return lst;
+}
+
+struct node *delet(struct node *lst,int ele)
+{
+	struct node *temp,*prev;
+	prev=NULL;
+	temp=lst;
+	while((temp->info!=ele)&&(temp!=NULL))
+	{
+		prev=temp;
+		temp=temp->next;
+	}
+	if(temp==NULL)
+		cout<<"\nGiven information not present.";
+	else
+	{
+		if(prev==NULL)
+			lst=lst->next;
+		else
+			prev->next=temp->next;
+		free(temp);
+	}
+	return lst;
+}
+
+void display(struct node *lst)
+{
+	struct node *temp;
+	cout<<"\nLIST->";
+	for(temp=lst;temp!=NULL;temp=temp->next)
+		cout<<temp->info<<"->";
+	cout<<"NULL";
+}
