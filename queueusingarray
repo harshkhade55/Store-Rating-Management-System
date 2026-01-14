@@ -1,0 +1,94 @@
+#include<iostream.h>
+#include<conio.h>
+#include<stdio.h>
+#include<string.h>
+
+void insert(int[],int);
+int delet(int[]);
+void display(int[]);
+int front,rear;
+
+main()
+{
+	int q[10],ele;
+	front=rear=-1;
+	char ch;
+	clrscr();
+	do
+	{
+		cout<<"\n\tOptions\t\t\t\tChoice";
+		cout<<"\n\tInsert\t\t\t\tI/i";
+		cout<<"\n\tDelete\t\t\t\tD/d";
+		cout<<"\n\tExit\t\t\t\tX/x";
+		cout<<"\nEnter your choice : ";
+		do
+			ch=getchar();
+		while(strchr("IiDdXx",ch)==NULL);
+		switch(ch)
+		{
+			case'I':
+			case'i':
+				if(rear<9)
+				{
+					cout<<"\nEnter element : ";
+					cin>>ele;
+					insert(q,ele);
+					cout<<"\n***** QUEUE *****";
+					display(q);
+				}
+				else
+					cout<<"\nQueue is full.";
+				break;
+			case'D':
+			case'd':
+				if(front==-1)
+					cout<<"\nQueue is empty";
+				else
+				{
+					ele=delet(q);
+					cout<<"\nDeleted element is : "<<ele;
+					if(front==-1)
+						cout<<"\nQueue has  become empty";
+					else
+					{
+						cout<<"\n***** QUEUE *****";
+						display(q);
+					}
+				}
+		}
+	} while(ch!='X' && ch!='x');
+}
+
+void insert(int q[10],int ele)
+{
+	q[++rear]=ele;
+	if(front==-1)
+		front=0;
+}
+
+int delet(int q[10])
+{
+	int ele,i;
+	ele=q[front];
+	for(i=front;i<rear;i++)
+		q[i]=q[i+1];
+	rear--;
+
+	if(rear==-1)
+		front=-1;
+	return ele;
+
+
+}
+
+void display(int q[10])
+{
+	int i;
+	cout<<"\nFront -->";
+	for(i=front;i<=rear;i++)
+		cout<<q[i]<<"-->";
+	cout<<"Rear";
+
+
+}
+
